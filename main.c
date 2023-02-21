@@ -6,7 +6,7 @@
 /*   By: nmaliare <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:15:09 by nmaliare          #+#    #+#             */
-/*   Updated: 2023/02/16 00:50:13 by nmaliare         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:09:03 by nmaliare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	clean_exit(t_pushswap *all, char f)
 	if (f == 'm')
 		ft_printf("Malloc Error!\n");
 	else if (f == 'd')
-		ft_printf("Error! Duplicate found!\n");
+		ft_printf("Error\n");
 	exit (1);
 }
 
@@ -67,6 +67,28 @@ void	init_all(t_pushswap *all)
 	all->bstart = bstart;
 }
 
+int	err_input(char **av)
+{
+	size_t	i;
+	size_t	len;
+
+	i = -1;
+	while (*av && *av[++i])
+	{
+		len = ft_strlen(*av);
+		if (!ft_isdigit(*av[i]))
+			return (0);
+		if (i > INT_MAX)
+			return (0);
+		if (i == len)
+		{
+			i = 0;
+			av++;
+		}
+	}
+	return (1);
+}
+
 int	main(int ac, char *av[])
 {
 	t_pushswap	all;
@@ -75,11 +97,11 @@ int	main(int ac, char *av[])
 
 	i = ac - 1;
 	if (ac < 2)
-		return (0 & ft_printf("Too less arguments\n"));
+		return (0);
+	if (!err_input(av))
+		return (0 & ft_printf("Error\n"));
 	init_all(&all);
 	all.a = ft_circle_newnode(ft_atoi(av[i]), 0, &all);
-	if (!all.a)
-		clean_exit(&all, 'm');
 	all.astart->len = 1;
 	all.astart->head = all.a;
 	while (--i > 0)

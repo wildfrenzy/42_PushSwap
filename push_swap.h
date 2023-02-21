@@ -6,7 +6,7 @@
 /*   By: nmaliare <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:15:05 by nmaliare          #+#    #+#             */
-/*   Updated: 2023/02/21 00:32:20 by nmaliare         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:08:12 by nmaliare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+# define INT_MAX 2147483647
 
 typedef struct s_dlist
 {
@@ -54,6 +56,7 @@ void	init_all(t_pushswap *all);
 void	ft_prepare(t_pushswap *all);
 int		ft_check_dupl(int num, t_data *start, t_dlist **lst);
 void	clean_exit(t_pushswap *all, char f);
+int		err_input(char **av);
 
 /*	sort.c	*/
 void	sort_5(t_pushswap *all);
