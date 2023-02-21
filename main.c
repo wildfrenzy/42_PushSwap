@@ -6,7 +6,7 @@
 /*   By: nmaliare <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 15:15:09 by nmaliare          #+#    #+#             */
-/*   Updated: 2023/02/21 23:09:03 by nmaliare         ###   ########.fr       */
+/*   Updated: 2023/02/21 23:19:21 by nmaliare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,14 @@ void	init_all(t_pushswap *all)
 	all->bstart = bstart;
 }
 
-int	err_input(char **av)
+int	err_input(int ac, char **av)
 {
 	size_t	i;
 	size_t	len;
 
-	i = -1;
-	while (*av && *av[++i])
+	i = 0;
+	av += 1;
+	while (ac-- && *av[i])
 	{
 		len = ft_strlen(*av);
 		if (!ft_isdigit(*av[i]))
@@ -85,11 +86,13 @@ int	err_input(char **av)
 			i = 0;
 			av++;
 		}
+		else
+			i++;
 	}
 	return (1);
 }
 
-int	main(int ac, char *av[])
+int	main(int ac, char **av)
 {
 	t_pushswap	all;
 	int			i;
@@ -98,7 +101,7 @@ int	main(int ac, char *av[])
 	i = ac - 1;
 	if (ac < 2)
 		return (0);
-	if (!err_input(av))
+	if (!err_input(ac, av))
 		return (0 & ft_printf("Error\n"));
 	init_all(&all);
 	all.a = ft_circle_newnode(ft_atoi(av[i]), 0, &all);
