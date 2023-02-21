@@ -16,7 +16,7 @@ NAME = push_swap
 
 HEADER = push_swap.h
 
-SRC = main.c lists.c rotate_swap.c sort.c a_to_b.c b_to_a.c rules.c print.c \
+SRC = main.c lists.c rotate_swap.c sort.c a_to_b.c b_to_a.c rules.c \
 	sort_helpers.c push_rules.c
 
 # Libft

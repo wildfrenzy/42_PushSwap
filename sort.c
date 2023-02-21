@@ -6,7 +6,7 @@
 /*   By: nmaliare <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 18:13:36 by nmaliare          #+#    #+#             */
-/*   Updated: 2023/02/20 13:28:33 by nmaliare         ###   ########.fr       */
+/*   Updated: 2023/02/21 00:47:06 by nmaliare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_prepare(t_pushswap *all)
 		clean_exit(all, 0);
 	else
 	{
-		new = ft_circle_cpy(&(all->a), all->astart, &newstart);
+		new = ft_circle_cpy(&(all->a), all->astart, &newstart, all);
 		sort_cpy(&new, &newstart);
 		position_main(all, &newstart);
 		if (all->astart->len <= 3)
@@ -61,8 +61,6 @@ void	ft_prepare(t_pushswap *all)
 			b_to_a(all);
 		}
 		ft_circle_free(&new, &newstart);
-		ft_printf ("a: ");
-		ft_printlst(all->a, all->astart);
 		clean_exit(all, 0);
 	}
 }

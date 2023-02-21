@@ -55,6 +55,8 @@ void	init_all(t_pushswap *all)
 	b = 0;
 	astart = ft_calloc(sizeof(t_data), 1);
 	bstart = ft_calloc(sizeof(t_data), 1);
+	if (!astart || !bstart)
+		exit(1);
 	astart->head = a;
 	bstart->head = b;
 	astart->len = 0;
@@ -75,7 +77,7 @@ int	main(int ac, char *av[])
 	if (ac < 2)
 		return (0 & ft_printf("Too less arguments\n"));
 	init_all(&all);
-	all.a = ft_circle_newnode(ft_atoi(av[i]), 0);
+	all.a = ft_circle_newnode(ft_atoi(av[i]), 0, &all);
 	if (!all.a)
 		clean_exit(&all, 'm');
 	all.astart->len = 1;
@@ -85,9 +87,8 @@ int	main(int ac, char *av[])
 		num = ft_atoi(av[i]);
 		if (!ft_check_dupl(num, all.astart, &(all.a)))
 			clean_exit(&all, 'd');
-		if (!ft_circle_addfront(&(all.a), \
-		ft_circle_newnode(num, 0), all.astart))
-			clean_exit(&all, 'm');
+		ft_circle_addfront(&(all.a), \
+		ft_circle_newnode(num, 0, &all), all.astart);
 	}
 	ft_prepare(&all);
 	return (0);

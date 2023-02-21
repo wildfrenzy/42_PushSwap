@@ -12,14 +12,14 @@
 
 #include "push_swap.h"
 
-t_dlist	*ft_circle_newnode(int number, int pos)
+t_dlist	*ft_circle_newnode(int number, int pos, t_pushswap *all)
 {
 	struct s_dlist	*new;
 
 	new = NULL;
 	new = (t_dlist *)malloc(sizeof(t_dlist));
 	if (new == NULL)
-		return (NULL);
+		clean_exit(all, 'm');
 	new->num = number;
 	new->position = pos;
 	new->next = NULL;
@@ -56,7 +56,6 @@ void	ft_circle_rmnode(t_dlist **lst, t_dlist **node, t_data *start)
 	t_dlist	*tmp;
 
 	tmp = *node;
-	//printf(">RM node pos:%d <\n", (*node)->position);
 	if (*node)
 	{
 		if (start->len > 1)
@@ -71,62 +70,23 @@ void	ft_circle_rmnode(t_dlist **lst, t_dlist **node, t_data *start)
 		}
 		else
 		{
-			//printf(" RM ELSE\n");
 			*lst = NULL;
 			start->head = NULL;
 		}
 		free(tmp);
 		start->len -= 1;
-		//printf("after RM len: %d\n", start->len);
-
-	/*	if (*lst && start->head)
-		{
-			printf("\nAFTER MESS:\n\n");
-			printf("head: %p %d\n", start->head, start->head->position);
-			printf("node pos: %d\n", (*node)->position);
-			printf("node next pos: %p %d\n", (*node)->next, (*node)->next->position);
-			printf("node prev pos: %d\n", (*node)->prev->position);
-			printf("lst pos: %d\n", (*lst)->position);
-			printf("lst next pos: %d\n", (*lst)->next->position);
-			printf("lst prev pos: %d\n", (*lst)->prev->position);
-			printf("---------\n");
-		}*/
-	}
-}
-
- //TODO: MALLOC ERRORS
-
-void	ft_circle_push(t_dlist **src, t_dlist **dest, t_data *srcstart, t_data *dststart)
-{
-	t_dlist	*tmp;
-
-	*src = srcstart->head;
-	if (srcstart->len > 0)
-	{
-		if (*dest)
-		{
-			tmp = ft_circle_newnode((*src)->num, (*src)->position);
-			ft_circle_addfront(dest, tmp, dststart);
-			dststart->head = tmp;
-		}
-		else
-		{
-			*dest = ft_circle_newnode((*src)->num, (*src)->position);
-			dststart->head = *dest;
-			dststart->len += 1;
-		}
-		ft_circle_rmnode(src, src, srcstart);
 	}
 }
 
 void	ft_circle_free(t_dlist **lst, t_data *start)
 {
 	*lst = start->head;
-	while(start->len > 0)
+	while (start->len > 0)
 		ft_circle_rmnode(lst, lst, start);
 }
 
-t_dlist	*ft_circle_cpy(t_dlist **lst, t_data *start, t_data *newstart)
+t_dlist	*ft_circle_cpy(t_dlist **lst, t_data *start, \
+	t_data *newstart, t_pushswap *all)
 {
 	t_dlist	*new;
 	int		i;
@@ -134,16 +94,11 @@ t_dlist	*ft_circle_cpy(t_dlist **lst, t_data *start, t_data *newstart)
 	i = start->len + 1;
 	*lst = start->head;
 	new = NULL;
-
 	while (--i > 0)
 	{
 		*lst = (*lst)->prev;
-		if (!ft_circle_addfront(&new, ft_circle_newnode((*lst)->num, (*lst)->position), newstart))
-		{
-			ft_circle_free(&new, newstart);
-			ft_printf("Malloc Error!\n");
-			return (0);
-		}
+		ft_circle_addfront(&new, \
+		ft_circle_newnode((*lst)->num, (*lst)->position, all), newstart);
 		new = newstart->head;
 		new->position = start->len - (start->len - i);
 	}
