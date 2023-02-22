@@ -56,6 +56,9 @@ void	init_all(t_pushswap *all);
 void	ft_prepare(t_pushswap *all);
 int		ft_check_dupl(int num, t_data *start, t_dlist **lst);
 void	clean_exit(t_pushswap *all, char f);
+
+/*	err.c	*/
+int		num_check(size_t i, char **av, size_t len);
 int		err_input(int ac, char **av);
 
 /*	sort.c	*/
